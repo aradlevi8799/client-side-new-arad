@@ -10,7 +10,7 @@
  * You should replace this with your actual deployed JSON file URL
  */
 export const DEFAULT_RATES_URL =
-  "https://raw.githubusercontent.com/yourusername/exchange-rates/main/rates.json";
+  "https://raw.githubusercontent.com/RoniBaranes/client-side-new/main/public/rates.json";
 
 /**
  * List of supported currencies in the application

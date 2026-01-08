@@ -14,7 +14,7 @@
    * This URL should return a JSON object with exchange rates
    * Format: {"USD":1, "GBP":0.6, "EURO":0.7, "ILS":3.4}
    */
-  const DEFAULT_RATES_URL = 'https://raw.githubusercontent.com/yourusername/exchange-rates/main/rates.json';
+  const DEFAULT_RATES_URL = 'https://raw.githubusercontent.com/RoniBaranes/client-side-new/main/public/rates.json';
 
   /**
    * Supported currencies in the application
