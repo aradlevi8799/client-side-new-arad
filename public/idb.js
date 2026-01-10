@@ -93,8 +93,7 @@ const DEFAULT_RATES_URL = 'https://cost-manager-sy6v.onrender.com/rates.json';
           sum: item.sum,
           currency: item.currency,
           category: item.category,
-          description: item.description,
-          Date: item.Date
+          description: item.description
         });
       };
 
@@ -195,26 +194,25 @@ const DEFAULT_RATES_URL = 'https://cost-manager-sy6v.onrender.com/rates.json';
       .then(function(costsRaw) {
         return _fetchRates(ratesUrl)
           .then(function(rates) {
-            const convertedCosts = costsRaw.map(function(c) {
-              const convertedSum = _convert(c.sum, c.currency, currency, rates);
+            const costs = costsRaw.map(function(c) {
               return {
-                sum: convertedSum,
-                currency: c.currency,
-                category: c.category,
-                description: c.description,
+                sum: Number(c.sum),
+                currency: String(c.currency),
+                category: String(c.category),
+                description: String(c.description),
                 Date: c.Date || { day: new Date(c.createdAt).getDate() }
               };
             });
 
             let total = 0;
-            for (let i = 0; i < convertedCosts.length; i++) {
-              total += Number(convertedCosts[i].sum || 0);
+            for (let i = 0; i < costsRaw.length; i++) {
+              total += _convert(Number(costsRaw[i].sum), String(costsRaw[i].currency), String(currency), rates);
             }
 
             return {
               year: Number(year),
               month: Number(month),
-              costs: convertedCosts,
+              costs: costs,
               total: {
                 currency: String(currency),
                 total: Math.round(total * 100) / 100

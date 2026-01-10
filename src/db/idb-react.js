@@ -90,14 +90,11 @@ export function addCost(cost) {
     const req = store.add(item);
 
     req.onsuccess = () => {
-      const inserted = { ...item, id: req.result };
       resolve({
-        sum: inserted.sum,
-        currency: inserted.currency,
-        category: inserted.category,
-        description: inserted.description,
-        Date: inserted.Date,
-        id: inserted.id,
+        sum: item.sum,
+        currency: item.currency,
+        category: item.category,
+        description: item.description,
       });
     };
 
@@ -154,23 +151,24 @@ export async function getReport(year, month, currency, ratesUrlOptional) {
   const costsRaw = await _getCostsByYearMonth(year, month);
   const rates = await fetchRates(ratesUrlOptional);
 
-  const convertedCosts = costsRaw.map((c) => {
-    const convertedSum = convert(c.sum, c.currency, currency, rates);
+  const costs = costsRaw.map((c) => {
     return {
-      sum: convertedSum,
-      currency: c.currency,
-      category: c.category,
-      description: c.description,
+      sum: Number(c.sum),
+      currency: String(c.currency),
+      category: String(c.category),
+      description: String(c.description),
       Date: c.Date || { day: new Date(c.createdAt).getDate() },
     };
   });
 
-  const total = convertedCosts.reduce((acc, c) => acc + Number(c.sum || 0), 0);
+  const total = costsRaw.reduce((acc, c) => {
+    return acc + convert(Number(c.sum), String(c.currency), String(currency), rates);
+  }, 0);
 
   return {
     year: Number(year),
     month: Number(month),
-    costs: convertedCosts,
+    costs: costs,
     total: { currency: String(currency), total: Math.round(total * 100) / 100 },
   };
 }

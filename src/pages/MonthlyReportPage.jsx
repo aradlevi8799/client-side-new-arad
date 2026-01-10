@@ -172,8 +172,8 @@ export default function MonthlyReportPage({ ctx }) {
                       <TableCell>Day</TableCell>
                       <TableCell>Category</TableCell>
                       <TableCell>Description</TableCell>
-                      <TableCell>Original Currency</TableCell>
-                      <TableCell align="right">Amount ({currency})</TableCell>
+                      <TableCell>Currency</TableCell>
+                      <TableCell align="right">Amount</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
